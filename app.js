@@ -14,6 +14,17 @@ mongoose.set("useCreateIndex", true);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Origin, X-Requested, Content-Type, Accept, Authorization");
+  if (req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Methods");
+    return res.status(200).json({});
+  }
+  return next();
+});
+
 const productsRouter = require("./Routers/Products");
 const cartsRouter = require("./Routers/Carts");
 const authRouter = require("./Routers/Auth");
